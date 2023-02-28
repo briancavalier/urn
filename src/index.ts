@@ -6,7 +6,11 @@ export interface URN<NID, NSS, R, Q, F> {
   readonly f: F
 }
 
-// Parse a URN string to a URN
+/**
+ * Attempt to parse a string to a URN
+ * Note that {@link parse} and {@link unparse} are inverses for valid URN strings.
+ * @returns URN when `s` represents a valid URN, undefined otherwise
+ */
 export const parse = <S extends string>(s: S): ParseURN<S> => {
   const m = rfc8141.exec(s)
   if (!m) return undefined as ParseURN<S>
@@ -33,7 +37,11 @@ export type ParseURN<S extends string> =
   : S extends `${URNScheme}:${infer NID}:${infer NSS}` ? URN<NID, NSS, undefined, undefined, undefined>
   : URN<string, string, string | undefined, string | undefined, string | undefined> | undefined
 
-// Unparse a URN to a string
+/**
+ * Unparse a URN to a valid string representation.
+ * Note that {@link parse} and {@link unparse} are inverses for valid URN strings.
+ * @returns valid string representation of the provided URN
+ */
 export const unparse = <U extends URN<string, string, string | undefined, string | undefined, string | undefined>>({ nid, nss, r, q, f }: U): UnparseURN<U> =>
   `urn:${nid}:${nss}${r ? `?+${r}` : ''}${q ? `?=${q}` : ''}${f ? `#${f}` : ''}` as UnparseURN<U>
 
