@@ -1,6 +1,6 @@
 # URN
 
-Tiny, zero-dependency, type-safe URN parser and unparser
+Type-safe URN parser, unparser, equivalence
 
 ## Inspiration
 
